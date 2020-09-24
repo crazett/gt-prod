@@ -16,6 +16,7 @@ class CreateGts < ActiveRecord::Migration[6.0]
       t.integer    :precut_extra_steel
       t.string     :etching
       t.boolean    :pipe
+      t.boolean    :packing
       t.boolean    :gt_tool
       t.boolean    :gt_flexo
       t.boolean    :gt_engraving

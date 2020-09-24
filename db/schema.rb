@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2020_09_23_165651) do
     t.integer "precut_extra_steel"
     t.string "etching"
     t.boolean "pipe"
+    t.boolean "packing"
     t.boolean "gt_tool"
     t.boolean "gt_flexo"
     t.boolean "gt_engraving"
