@@ -1,0 +1,48 @@
+<%= search_form_for @q, url: statistik_path,
+                        html: { method: :post } do |f| %>
+    <%= f.label "Från" %>
+    <%= f.date_field :deliver_date_gt%>
+    <%= f.label "Till" %>
+    <%= f.date_field :deliver_date_lt%>
+    <%= f.select(:width_eq, Gt::WIDTH_ARRAY, :include_blank => true)%>
+    <%= f.submit "Sök", class: "btn btn-primary" %>
+  </p>
+<% end %>
+<div class="row">
+  <div class="col-6">
+    <%= line_chart [
+      #{name: "Längd", data: @gts.group_by_month(:deliver_date).sum(:length)},
+      #{name: "Bredd", data: @gts.group_by_month(:deliver_date).sum(:width)},
+      {name: "GT", data: @gts.group_by_month(:deliver_date).sum(:amount)}
+    ], library: {tooltips: {mode: "index"}} %>
+  </div>
+  <div class="col-6">
+    <%= line_chart [
+      #{name: "Längd", data: @gts.group_by_month(:deliver_date).sum(:length)},
+      #{name: "Bredd", data: @gts.group_by_month(:deliver_date).sum(:width)},
+      {name: "GT", data: @gts.group_by_year(:deliver_date).sum(:amount)}
+    ], library: {tooltips: {mode: "index"}} %>
+  </div>
+</div>
+ <div class="row">
+  <div class="col-6">
+    <table class="table">
+        <thead>
+            <th>Mått</th>
+            <th>Antal</th>
+        </thead>
+        <% @gts_grouped.each do |group| %>
+        <tbody>
+            <tr>
+              <td><%= group[0][0] %>x<%= group[0][1] %>mm <%= group[0][2] %>°</td>
+              <td><%= Gt.where(width: group[0][0], length: group[0][1], degree: group[0][2]).sum(:amount) %></td>
+            </tr>
+        </tbody>
+        <% end %>
+    </table>
+  </div>
+  <div class="col-6">
+      <%#= column_chart @gts_grouped.map { |size| {name: size[0][0].to_s + "x" + size[0][1].to_s + " " + size[0][2].to_s + "°", data: size[1]}} %>
+      <%= column_chart @gts.group(:width, :length).order(:width).order(:length).count %>
+  </div>
+</div>

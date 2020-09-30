@@ -10,35 +10,65 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_23_165651) do
+ActiveRecord::Schema.define(version: 2020_09_27_200435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customers", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+  end
 
   create_table "gts", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "order_date"
     t.datetime "deliver_date"
-    t.string "customer"
-    t.bigint "ref_num"
+    t.integer "customer_id"
+    t.string "ref_num"
     t.integer "length"
     t.integer "amount"
-    t.string "width_degree"
-    t.boolean "rivet"
+    t.integer "width"
+    t.integer "degree"
+    t.boolean "rivet", default: true
     t.boolean "under_steel"
-    t.integer "quality_id"
+    t.string "quality"
     t.boolean "precut_gt"
     t.integer "precut_extra_steel"
-    t.string "etching"
+    t.string "etching", default: "Standard"
     t.boolean "pipe"
     t.boolean "packing"
     t.boolean "gt_tool"
     t.boolean "gt_flexo"
     t.boolean "gt_engraving"
     t.text "comment"
-    t.string "worker"
-    t.string "approver"
+    t.integer "worker_id"
+    t.integer "approver_id"
+    t.integer "priority", default: 1
+    t.boolean "under_bool"
+    t.boolean "precut_gt_bool"
+    t.boolean "precut_extra_bool"
+    t.boolean "done", default: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "workers", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
   end
 
 end

@@ -1,0 +1,9 @@
+<%= search_form_for @q, url: arkiv_path do |f| %>
+  <%#= link_to "Skapa Order", new_gt_path(@gt), class: "btn btn-primary" %>
+  <%= f.search_field :ref_num_cont, placeholder: "Referensnummer" %>
+  <%= f.submit "Sök", class: "btn btn-primary" %>
+  </p>
+<% end %>
+<div id="indexTable">
+  <%= render partial: 'table', locals: {gts: @gts_arkiv, q: @q} %>
+</div>

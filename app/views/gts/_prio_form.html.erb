@@ -1,0 +1,7 @@
+<%= form_for gt do |f| %>
+    <div class="row">
+        <div class="col-4" onclick="$.get('<%= update_prio_gt_path(gt) %>', { from: 'modal', type: 1}, function(data){});" style="background: <%= Gt::PRIO[1][2] %>; height: 48px;"></div>
+        <div class="col-4" onclick="$.get('<%= update_prio_gt_path(gt) %>', { from: 'modal', type: 2}, function(data){});" style="background: <%= Gt::PRIO[2][2] %>; height: 48px;"></div>
+        <div class="col-4" onclick="$.get('<%= update_prio_gt_path(gt) %>', { from: 'modal', type: 3}, function(data){});" style="background: <%= Gt::PRIO[3][2] %>; height: 48px;"></div>
+    </div>
+<% end %>

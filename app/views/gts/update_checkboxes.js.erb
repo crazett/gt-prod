@@ -1,0 +1,25 @@
+<% if params[:box] == "under" %>
+    <% @gt.toggle!(:under_bool) %>
+    <% if @gt.under_bool %>
+        $('#table_under-<%= @gt.id %>').html('<i class="text-success far fa-check-square fa-lg"></i>')
+    <% else %>
+        $('#table_under-<%= @gt.id %>').html('<i class="text-danger far fa-square fa-lg"></i>')
+    <% end %>
+<% end %>
+<% if params[:box] == "precut_gt" %>
+    <% @gt.toggle!(:precut_gt_bool) %>
+        <% if @gt.precut_gt_bool %>
+        $('#table_precut_gt-<%= @gt.id %>').html('<i class="text-success far fa-check-square fa-lg"></i>')
+    <% else %>
+        $('#table_precut_gt-<%= @gt.id %>').html('<i class="text-danger far fa-square fa-lg"></i>')
+    <% end %>
+<% end %>
+<% if params[:box] == "precut_extra" %>
+    <% @gt.toggle!(:precut_extra_bool) %>
+    <% if @gt.precut_extra_bool %>
+        $('#table_precut_extra-<%= @gt.id %>').html('<i class="text-success far fa-check-square fa-lg"></i>')
+    <% else %>
+        $('#table_precut_extra-<%= @gt.id %>').html('<i class="text-danger far fa-square fa-lg"></i>')
+    <% end %>
+<% end %>
+

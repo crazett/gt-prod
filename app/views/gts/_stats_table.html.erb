@@ -1,0 +1,14 @@
+<% Gt::WIDTH_ARRAY.each do |width, size| %>
+    <% if @gts.where(width: size).any? %>
+        <table class="table">
+            <thead>
+                <th><%= width %></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><%= @gts.where(width: size).sum(:amount) %>st</td>
+                </tr>
+            </tbody>
+        </table>
+    <% end %>
+<% end %>

@@ -8,8 +8,13 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
+  <%= render 'layouts/tiny_modal' %>
+  <%= render 'layouts/toastr' %>
+  <%= render 'layouts/navbar' %>
+  <div class="container-fluid">
+    <br>
     <%= yield %>
+  </div>
   </body>
 </html>

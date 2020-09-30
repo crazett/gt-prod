@@ -1,0 +1,74 @@
+<table class="table table-hover">
+    <thead class="text-center">
+        <th><%= sort_link q, :order_date, "Beställningsdatum", {}, { :remote => true, :method => :get } %></th>
+        <th><%= sort_link q, :deliver_date, "Leveransdatum", {}, { :remote => true, :method => :get } %></th>
+        <th><%= sort_link q, :customer_name, "Leveransdatum", {}, { :remote => true, :method => :get } %></th>
+        <th><%= sort_link q, :ref_num, "Referensnummer", {}, { :remote => true, :method => :get } %></th>
+        <th>GT</th>
+        <th>Antal</th>
+        <th>Precut stål extra</th>
+        <th>Athena/Triton</th>
+        <th><%= sort_link q, :under_bool, "Underläggsstål", {}, { :remote => true, :method => :get } %></th>
+        <th><%= sort_link q, :precut_gt_bool, "Precut stål till GT", {}, { :remote => true, :method => :get } %></th>
+        <th><%= sort_link q, :precut_extra_bool, "Precut stål extra", {}, { :remote => true, :method => :get } %></th>
+        <th><%= sort_link q, :priority, "Prioritet", {}, { :remote => true, :method => :get } %></th>
+    </thead>
+    <tbody class="text-center">
+        <% gts.order(:order_date).each do |gt| %>
+        <tr>
+            <td style="width: 1%;"><%= gt.order_date.strftime("%Y-%m-%d") if gt.order_date %></td>
+            <td style="width: 1%;"><%= gt.deliver_date.strftime("%Y-%m-%d") if gt.deliver_date %></td>
+            <td style="width: 25%;"><%= gt.customer.name.truncate(27) if gt.customer %></td>
+            <td onclick="Turbolinks.visit('<%= gt_path(gt) %>');"><%= link_to gt.ref_num, gt if gt.ref_num %></td>
+            <td class="col-2">
+            <% gt_value = "" %> <% gt_value += gt.width.to_s if gt.width %> <% gt_value += "x" if gt.length %> <% gt_value += gt.length.to_s + "mm" if gt.length %> <% gt_value += " " + gt.degree.to_s + "°" if gt.degree %>
+            <%= gt_value %>
+            </td>
+            <td class="col-1 <%= "unselectable" if !gt.amount %>"><%= gt.amount.to_s + "st" if gt.amount %><%= "N/A" if !gt.amount %></td>
+            <td class="col-1 <%= "unselectable" if !gt.precut_extra_steel %>"><%= gt.precut_extra_steel.to_s + "st" if gt.precut_extra_steel %><%= "N/A" if !gt.precut_extra_steel %></td>
+            <td class="col-1 <%= "unselectable" if gt.quality == "" %>"><%= "Athena" if gt.quality.include?("Athena") %><%= "Triton" if gt.quality.include?("Triton") %><%= "N/A" if !gt.quality == "" %></td>
+            <% if gt.under_steel %>
+                <td class="col-1" onclick="$.get('<%= update_checkboxes_gt_path(gt) %>', { from: 'index', box: 'under'}, function(data){});" id="table_under-<%= gt.id%>">
+                <% if gt.under_bool %>
+                    <i class="text-success far fa-check-square fa-lg"></i>
+                <% else %>
+                    <i class="text-danger far fa-square fa-lg"></i>
+                <% end %>
+                </td>
+            <% else %>
+                <td class="unselectable col-1">
+                    <i class="far fa-square fa-lg"></i>
+                </td>
+            <% end %>
+            <% if gt.precut_gt %>
+                <td class="col-1" onclick="$.get('<%= update_checkboxes_gt_path(gt) %>', { from: 'index', box: 'precut_gt'}, function(data){});" id="table_precut_gt-<%= gt.id%>">
+                <% if gt.precut_gt_bool %>
+                    <i class="text-success far fa-check-square fa-lg"></i>
+                <% else %>
+                    <i class="text-danger far fa-square fa-lg"></i>
+                <% end %>
+                </td>
+            <% else %>
+                <td class="unselectable col-1">
+                    <i class="far fa-square fa-lg"></i>
+                </td>
+            <% end %>
+            <% if gt.precut_extra_steel %>
+                <td class="col-1" onclick="$.get('<%= update_checkboxes_gt_path(gt) %>', { from: 'index', box: 'precut_extra'}, function(data){});" id="table_precut_extra-<%= gt.id%>">
+                <% if gt.precut_extra_bool %>
+                    <i class="text-success far fa-check-square fa-lg"></i>
+                <% else %>
+                    <i class="text-danger far fa-square fa-lg"></i>
+                <% end %>
+                </td>
+            <% else %>
+                <td class="unselectable col-1">
+                    <i class="far fa-square fa-lg"></i>
+                </td>
+            <% end %>
+     
+            <td id="tableForm-<%= gt.id %>" onclick="$.get('<%= update_prio_gt_path(gt) %>', { from: 'index'}, function(data){});" style="padding: 0;"><div style="background-color: <%= Gt::PRIO[gt.priority][2] %>; height: 48px; width: 100%;"></div></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

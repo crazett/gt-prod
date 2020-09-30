@@ -1,0 +1,13 @@
+<%= search_form_for @q, url: sortera_path,
+                        html: { method: :post } do |f| %>
+    <%= f.label "Från" %>
+    <%= f.date_field :deliver_date_gt%>
+    <%= f.label "Till" %>
+    <%= f.date_field :deliver_date_lt%>
+    <%= f.select(:width_eq, Gt::WIDTH_ARRAY, :include_blank => true)%>
+    <%= f.submit "Sök", class: "btn btn-primary" %>
+  </p>
+<% end %>
+
+<%= render 'stats_table' %>
+<%#= render partial: 'gts/table', locals: {gts: @gts, q: @q} %>

@@ -1,0 +1,23 @@
+<%= link_to "Skapa Order", new_gt_path(@gt), class: "btn btn-primary" %>
+<%= search_form_for @q, remote: true do |f| %>
+  <%= f.search_field :ref_num_cont, placeholder: "Referensnummer" %>
+  <%= f.submit "Sök", class: "btn btn-primary" %>
+  </p>
+<% end %>
+<h1>I produktion</h1>
+<div id="productionTable">
+  <%= render partial: 'table', locals: {gts: @gts, q: @q} %>
+</div>
+<%= search_form_for @x, url: senast_levererad_path, remote: true do |f| %>
+  <%= f.search_field :ref_num_cont, placeholder: "Referensnummer" %>
+  <%= f.submit "Sök", class: "btn btn-primary" %>
+  </p>
+<% end %>
+<h1>Senast levererade</h1>
+<div id="deliveredTable">
+  <%#= render partial: 'table', locals: {gts: @gts_done, q: @x} %>
+</div>
+
+<script>
+$.ajax({url: "<%= senast_levererad_path %>"})
+</script>

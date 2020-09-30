@@ -1,2 +1,8 @@
 @import "~bootstrap/scss/bootstrap";
 @import '@fortawesome/fontawesome-free';
+@import "toastr";
+
+.unselectable{
+    background-color: #ddd;
+    cursor: not-allowed;
+};

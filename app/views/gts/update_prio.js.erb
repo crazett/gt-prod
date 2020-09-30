@@ -1,0 +1,6 @@
+<% if params[:from] == "index" %>
+    $('#tableForm-<%= @gt.id %>').html("<%= j render partial: 'gts/prio_form', locals: {gt: @gt} %>")
+<% else %>
+    <% @gt.update_attribute("priority", params[:type])%>
+    $("#tableForm-<%= @gt.id %>").html('<div style="background-color: <%= Gt::PRIO[params[:type].to_i][2] %>; height: 48px; width: 100%;"></div>')
+<% end %>
